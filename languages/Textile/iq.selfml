@@ -1,0 +1,70 @@
+(detector
+    (extension textile))
+
+(detector
+    (content-matches textile))
+
+(in [text.html.textile markup.raw]
+    (no-spellchecking))
+
+(pair *
+    *
+    (smart-typing))
+
+(pair [`]
+    [`]
+    (smart-typing))
+
+(pair ~
+    ~
+    (smart-typing))
+
+(pair %
+    %
+    (smart-typing))
+
+(pair `[`
+    `]`
+    (smart-typing))
+
+(pair [{]
+    [}]
+    (smart-typing))
+
+(pair “
+    ”
+    (smart-typing))
+
+(pair [(]
+    [)]
+    (smart-typing))
+
+(pair ^
+    ^
+    (smart-typing))
+
+(pair @
+    @
+    (smart-typing))
+
+(pair _
+    _
+    (smart-typing))
+
+(pair "
+    "
+    (smart-typing))
+
+(in [text.html.textile markup.heading.textile]
+    (symbol-list
+        (transformation [
+		s/\s*$//;				# strip spaces
+		s/^\s*//;
+		s/(^(h[1-6])([<>=()]+)?)(\([^)]*\)|{[^}]*})*(\.)/$2/;
+		s/^h1//;				# indent headers
+		s/^h2/  /;
+		s/^h3/   /;
+		s/^h4/    /;
+		s/^h5/     /;
+		s/^h6/      /;
+	])))

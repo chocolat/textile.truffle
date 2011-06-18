@@ -1,0 +1,8 @@
+(name [Class and Id])
+
+(trigger
+    (key [[ctrl][shift]I]))
+
+(only-in text.html.textile)
+
+(snippet [(%{1="class"}#%{2="id"})])

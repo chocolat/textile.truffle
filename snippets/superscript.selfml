@@ -1,0 +1,8 @@
+(name Superscript)
+
+(trigger
+    (key [[ctrl][shift][up]]))
+
+(only-in text.html.textile)
+
+(snippet [^%{TM_SELECTED_TEXT}^])

@@ -1,0 +1,8 @@
+(name [Linked Image])
+
+(trigger
+    (tab linkimg))
+
+(only-in text.html.textile)
+
+(snippet [!%{1="http://site.com/image"}(%{2="Title"})!:%{3="http://linkedsite.com"}])

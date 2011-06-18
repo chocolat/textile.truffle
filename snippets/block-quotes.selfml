@@ -1,0 +1,10 @@
+(name [Block Quote])
+
+(trigger
+    (tab bq))
+
+(only-in text.html.textile)
+
+(snippet [bq. %{1="A quote..."}
+
+%{0}])

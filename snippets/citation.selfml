@@ -1,0 +1,8 @@
+(name Citation)
+
+(trigger
+    (key [[cmd]']))
+
+(only-in text.html.textile)
+
+(snippet [??%{TM_SELECTED_TEXT}??])

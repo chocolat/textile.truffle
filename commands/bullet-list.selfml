@@ -1,0 +1,22 @@
+(trigger
+    (key [[ctrl][shift]*]))
+
+(name [Bullet List])
+
+(only-in text.html.textile)
+
+(input selection)
+
+(output replace-selected)
+
+(save nothing)
+
+(script [#!/usr/bin/env ruby
+ENV['TM_SELECTED_TEXT'].to_s.each_line() { |line|
+	if(line =~ /^\*/)
+		print("*#{line}")
+	else
+		print("* #{line}")
+	end
+}
+])

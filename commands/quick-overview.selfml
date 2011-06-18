@@ -1,0 +1,14 @@
+(trigger
+    (key [[ctrl]H]))
+
+(name [Show Documentation])
+
+(only-in text.html.textile)
+
+(input nothing)
+
+(output html)
+
+(save nothing)
+
+(script [echo '<meta http-equiv="refresh" content="0; http://redcloth.org/hobix.com/textile/">'])

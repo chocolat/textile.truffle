@@ -1,0 +1,10 @@
+(name Footnote)
+
+(trigger
+    (key [[ctrl][shift]~]))
+
+(only-in text.html.textile)
+
+(snippet [[%{1="1"}]%{0}
+
+fn%{1}. %{2}])

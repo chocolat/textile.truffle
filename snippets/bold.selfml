@@ -1,0 +1,8 @@
+(name Bold)
+
+(trigger
+    (key [[cmd]B]))
+
+(only-in text.html.textile)
+
+(snippet [*%{TM_SELECTED_TEXT}*])

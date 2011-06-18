@@ -1,0 +1,7 @@
+(name [Convert Tabs To Table])
+
+(trigger)
+
+(only-in text.html.textile)
+
+(snippet [%{TM_SELECTED_TEXT/(^|$|\t)/|/g}])

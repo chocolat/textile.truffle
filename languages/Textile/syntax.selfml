@@ -1,0 +1,191 @@
+(root text.html.textile
+    (zone markup.heading.textile
+        (start
+            (regex [(^h[1-6]([<>=()]+)?)(\([^)]*\)|{[^}]*})*(\.)]
+                (3 entity.name.type.textile)
+                (4 entity.name.tag.heading.textile)
+                (1 entity.name.tag.heading.textile)))
+        (end
+            (regex ^$
+                (3 entity.name.type.textile)
+                (4 entity.name.tag.heading.textile)
+                (1 entity.name.tag.heading.textile)))
+        (subzones
+            (include @inline)
+            (include text.html.basic)))
+    (zone markup.quote.textile
+        (start
+            (regex [(^bq([<>=()]+)?)(\([^)]*\)|{[^}]*})*(\.)]
+                (3 entity.name.type.textile)
+                (4 entity.name.tag.blockquote.textile)
+                (1 entity.name.tag.blockquote.textile)))
+        (end
+            (regex ^$
+                (3 entity.name.type.textile)
+                (4 entity.name.tag.blockquote.textile)
+                (1 entity.name.tag.blockquote.textile)))
+        (subzones
+            (include @inline)
+            (include text.html.basic)))
+    (zone markup.other.footnote.textile
+        (start
+            (regex [(^fn[0-9]+([<>=()]+)?)(\([^)]*\)|{[^}]*})*(\.)]
+                (3 entity.name.type.textile)
+                (4 entity.name.tag.footnote.textile)
+                (1 entity.name.tag.footnote.textile)))
+        (end
+            (regex ^$
+                (3 entity.name.type.textile)
+                (4 entity.name.tag.footnote.textile)
+                (1 entity.name.tag.footnote.textile)))
+        (subzones
+            (include @inline)
+            (include text.html.basic)))
+    (zone markup.other.table.textile
+        (start
+            (regex [(^table([<>=()]+)?)(\([^)]*\)|{[^}]*})*(\.)]
+                (3 entity.name.type.textile)
+                (4 entity.name.tag.footnote.textile)
+                (1 entity.name.tag.footnote.textile)))
+        (end
+            (regex ^$
+                (3 entity.name.type.textile)
+                (4 entity.name.tag.footnote.textile)
+                (1 entity.name.tag.footnote.textile)))
+        (subzones
+            (include @inline)
+            (include text.html.basic)))
+    (zone meta.paragraph.textile
+        (start
+            (regex [^(?=\S)]))
+        (end
+            (regex ^$))
+        (subzones
+            (zone entity.name.section.paragraph.textile
+                (match
+                    (regex [(^p([<>=()]+)?)(\([^)]*\)|{[^}]*})*(\.)]
+                        (3 entity.name.type.textile)
+                        (4 entity.name.tag.paragraph.textile)
+                        (1 entity.name.tag.paragraph.textile))))
+            (include @inline)
+            (include text.html.basic)))
+    (include text.html.basic))
+
+(collection inline
+    (zone text.html.textile
+        (match
+            (regex [&(?![A-Za-z0-9]+;)])))
+    (zone markup.list.unnumbered.textile
+        (match
+            (regex [^\*+(\([^)]*\)|{[^}]*})*(\s+|$)]
+                (1 entity.name.type.textile))))
+    (zone markup.list.numbered.textile
+        (match
+            (regex [^#+(\([^)]*\)|{[^}]*})*\s+]
+                (1 entity.name.type.textile))))
+    (zone meta.link.reference.textile
+        (match
+            (regex `(?x)
+								"								# Start name, etc
+									(?:							# Attributes
+										# I swear, this is how the language is defined,
+										# couldnt make it up if I tried.
+										(?:\([^)]+\))?(?:\{[^}]+\})?(?:\[[^\]]+\])?
+											# Class, Style, Lang
+									  | (?:\{[^}]+\})?(?:\[[^\]]+\])?(?:\([^)]+\))?
+											# Style, Lang, Class
+									  | (?:\[[^\]]+\])?(?:\{[^}]+\})?(?:\([^)]+\))?
+											# Lang, Style, Class
+									)?
+									([^"]+?)					# Link name
+									\s?							# Optional whitespace
+									(?:\(([^)]+?)\))?
+								":								# End name
+								(\w[-\w_]*)						# Linkref
+								(?=[^\w\/;]*?(<|\s|$))			# Catch closing punctuation
+																#  and end of meta.link
+					`
+                (3 constant.other.reference.link.textile)
+                (1 string.other.link.title.textile)
+                (2 string.other.link.description.title.textile))))
+    (zone meta.link.inline.textile
+        (match
+            (regex `(?x)
+								"								# Start name, etc
+									(?:							# Attributes
+										# I swear, this is how the language is defined,
+										# couldnt make it up if I tried.
+										(?:\([^)]+\))?(?:\{[^}]+\})?(?:\[[^\]]+\])?
+											# Class, Style, Lang
+									  | (?:\{[^}]+\})?(?:\[[^\]]+\])?(?:\([^)]+\))?
+											# Style, Lang, Class
+									  | (?:\[[^\]]+\])?(?:\{[^}]+\})?(?:\([^)]+\))?
+											# Lang, Style, Class
+									)?
+									([^"]+?)					# Link name
+									\s?							# Optional whitespace
+									(?:\(([^)]+?)\))?
+								":								# End Name
+								(\S*?(?:\w|\/|;))				# URL
+								(?=[^\w\/;]*?(<|\s|$))			# Catch closing punctuation
+																#  and end of meta.link
+					`
+                (3 markup.underline.link.textile)
+                (1 string.other.link.title.textile)
+                (2 string.other.link.description.title.textile))))
+    (zone meta.image.inline.textile
+        (match
+            (regex `(?x)
+								\!										# Open image
+								(\<|\=|\>)?								# Optional alignment
+								(?:										# Attributes
+									# I swear, this is how the language is defined,
+									# couldnt make it up if I tried.
+									(?:\([^)]+\))?(?:\{[^}]+\})?(?:\[[^\]]+\])?
+										# Class, Style, Lang
+								  | (?:\{[^}]+\})?(?:\[[^\]]+\])?(?:\([^)]+\))?
+										# Style, Lang, Class
+								  | (?:\[[^\]]+\])?(?:\{[^}]+\})?(?:\([^)]+\))?
+										# Lang, Style, Class
+								)?
+								(?:\.[ ])?            					# Optional
+								([^\s(!]+?)         					# Image URL
+								\s?                						# Optional space
+								(?:\(((?:[^\(\)]|\([^\)]+\))+?)\))?   	# Optional title
+								\!										# Close image
+								(?:
+									:
+									(\S*?(?:\w|\/|;))					# URL
+									(?=[^\w\/;]*?(<|\s|$))				# Catch closing punctuation
+								)?
+					`
+                (3 string.other.link.description.textile)
+                (4 markup.underline.link.textile)
+                (2 markup.underline.link.image.textile))))
+    (zone markup.other.table.cell.textile
+        (match
+            (regex [\|(\([^)]*\)|{[^}]*})*(\\\||.)+\|]
+                (1 entity.name.type.textile))))
+    (zone markup.bold.textile
+        (match
+            (regex `\B(\*\*?)((\([^)]*\)|{[^}]*}|\[[^]]+\]){0,3})(\S.*?\S|\S)\1\B`
+                (3 entity.name.type.textile))))
+    (zone markup.deleted.textile
+        (match
+            (regex `\B-((\([^)]*\)|{[^}]*}|\[[^]]+\]){0,3})(\S.*?\S|\S)-\B`
+                (2 entity.name.type.textile))))
+    (zone markup.inserted.textile
+        (match
+            (regex `\B\+((\([^)]*\)|{[^}]*}|\[[^]]+\]){0,3})(\S.*?\S|\S)\+\B`
+                (2 entity.name.type.textile))))
+    (zone markup.italic.textile
+        (match
+            (regex `(?:\b|\s)_((\([^)]*\)|{[^}]*}|\[[^]]+\]){0,3})(\S.*?\S|\S)_(?:\b|\s)`
+                (2 entity.name.type.textile))))
+    (zone markup.italic.phrasemodifiers.textile
+        (match
+            (regex `\B([@\^~%]|\?\?)((\([^)]*\)|{[^}]*}|\[[^]]+\]){0,3})(\S.*?\S|\S)\1`
+                (3 entity.name.type.textile))))
+    (zone entity.name.tag.textile
+        (match
+            (regex [(?<!w)\[[0-9+]\]]))))

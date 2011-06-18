@@ -1,0 +1,10 @@
+(name [Heading 2])
+
+(trigger
+    (tab h2))
+
+(only-in text.html.textile)
+
+(snippet [h2. %{1="Text..."}
+
+%{0}])

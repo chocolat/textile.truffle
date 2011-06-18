@@ -1,0 +1,8 @@
+(name Color)
+
+(trigger
+    (key [[ctrl][shift]I]))
+
+(only-in text.html.textile)
+
+(snippet [{color:%{1="green"}}])

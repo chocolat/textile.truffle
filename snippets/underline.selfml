@@ -1,0 +1,8 @@
+(name Underline)
+
+(trigger
+    (key [[cmd]U]))
+
+(only-in text.html.textile)
+
+(snippet [+%{TM_SELECTED_TEXT}+])

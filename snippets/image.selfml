@@ -1,0 +1,8 @@
+(name Image)
+
+(trigger
+    (tab img))
+
+(only-in text.html.textile)
+
+(snippet [!%{1="http://site.com/image"}(%{2="Title"})!])

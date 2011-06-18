@@ -1,0 +1,9 @@
+(menu command.convert-document-to-html
+    command.quick-overview
+    ---
+    (submenu Format snippet.bold snippet.italic snippet.underline snippet.strikethrough --- snippet.superscript snippet.subscript snippet.citation snippet.color)
+    (submenu Attributes snippet.id snippet.class snippet.class-and-id snippet.language snippet.style snippet.color-2)
+    (submenu Headers snippet.heading-1 snippet.heading-2 snippet.heading-3 snippet.heading-4 snippet.heading-5 snippet.heading-6)
+    (submenu Lists command.bullet-list command.number-list)
+    (submenu Other snippet.acronym snippet.block-quotes snippet.image snippet.linked-image snippet.footnote)
+    snippet.convert-tabs-to-table)

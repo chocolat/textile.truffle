@@ -1,0 +1,8 @@
+(name Acronym)
+
+(trigger
+    (tab acr))
+
+(only-in text.html.textile)
+
+(snippet [%{1="ABC"}(%{2="Always Be Closing"})])

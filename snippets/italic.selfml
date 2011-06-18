@@ -1,0 +1,8 @@
+(name Italic)
+
+(trigger
+    (key [[cmd]I]))
+
+(only-in text.html.textile)
+
+(snippet [_%{TM_SELECTED_TEXT}_])

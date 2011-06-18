@@ -1,0 +1,8 @@
+(name [Color Selection])
+
+(trigger
+    (key [[cmd]K]))
+
+(only-in text.html.textile)
+
+(snippet [%{color:%{1="green"}}%{TM_SELECTED_TEXT}%])
