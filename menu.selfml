@@ -1,5 +1,4 @@
-(menu command.convert-document-to-html
-    command.quick-overview
+(menu command.quick-overview
     ---
     (submenu Format snippet.bold snippet.italic snippet.underline snippet.strikethrough --- snippet.superscript snippet.subscript snippet.citation snippet.color)
     (submenu Attributes snippet.id snippet.class snippet.class-and-id snippet.language snippet.style snippet.color-2)
